@@ -6,8 +6,8 @@ import numpy as np
 """ OUTPUT IS PANDAS DATAFRAME                                      """
 month_codes = {}
 month_names = {}
-# todo: make path a parameter?
-rootFolder = '/home/adamka/finance/data/vixfutures/'
+# todo: use relative path
+rootFolder = '/home/pi/finance/vola/viksz/data/CBOE'
 fileName = rootFolder + 'monthCodes.txt'
 with open(fileName) as csvDataFile:
     csvReader = csv.reader(csvDataFile, delimiter=',')

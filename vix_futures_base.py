@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 # load data
-futTab = ft.readFuturesData(range(2013,2019))
+futTab = ft.readFuturesData(range(2018,2019))
 futTab = futTab.sort_values(['date','expiry'])
 dates = futTab.date.unique()
 futTab.loc[:,'slope'] = np.nan
