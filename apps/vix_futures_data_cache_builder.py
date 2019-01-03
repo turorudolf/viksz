@@ -4,10 +4,13 @@
 
 import modules.futuresData as ft
 import numpy as np
+import os
 
 
 # load data
-futTab = ft.readFuturesData(range(2008, 2019))
+startYr = 2006
+endYr = 2018
+futTab = ft.readFuturesData(range(startYr, endYr))
 
 futTab = futTab.sort_values(['date','expiry'])
 dates = futTab.date.unique()
@@ -17,9 +20,9 @@ dates = futTab.date.unique()
 # fix some data issues
 #
 # find rows with close==0
-f = futTab.loc[futTab.close == 0]
+#f = futTab.loc[futTab.close == 0]
 # set zero close values as the mean of daily high and low
-futTab.loc[f.index, 'close'] = 0.5*(futTab.iloc[f.index].high + futTab.iloc[f.index].low)
+#futTab.loc[f.index, 'close'] = 0.5*(futTab.iloc[f.index].high + futTab.iloc[f.index].low)
 futTab.open = futTab.open.replace(0, np.nan)
 futTab.close = futTab.close.replace(0, np.nan)
 futTab.high = futTab.high.replace(0, np.nan)
@@ -31,7 +34,7 @@ futTab.settle = futTab.settle.replace(0, np.nan)
 # todo: fix numbering ! if there is not enough data no.1 will be assigned to a
 # longer expiry!!
 
-print "Setting ordinal numbers ..."
+print("Setting ordinal numbers ...")
 for date in dates:
     f = futTab[futTab.date==date]
     futTab.loc[futTab.date==date,'num'] = range(1, len(f) + 1)
@@ -43,9 +46,10 @@ futTab['cnt'] = gr[futTab.date]
 futTab = futTab.loc[futTab.cnt > 6]
 futTab = futTab.drop(['cnt'], axis=1)
 
-
-futTab.to_csv('cache/vix_futures.csv',index=False)
-print "Dumped to cache!"
+dirname = os.path.dirname(__file__)
+fileName = os.path.join(dirname, '../data/cache/vixfut' + str(startYr) + '_' + str(endYr) + '.csv')
+futTab.to_csv(fileName, index=False)
+print("Dumped to cache!")
 
 # todo1: set multiplier before ~2008 it was *10 -- OK
 # todo:1.1 fix indexing -- OK after loading from cache 

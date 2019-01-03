@@ -1,28 +1,35 @@
 import pandas as pd
 import csv
 import numpy as np
+import os
 
 """ READING FUTURES DATA FROM CSV AND ADDING DAYS TO MATURITIES"""
 """ OUTPUT IS PANDAS DATAFRAME                                      """
 month_codes = {}
 month_names = {}
 # todo: use relative path
-rootFolder = '/home/pi/finance/vola/viksz/data/CBOE'
+
+dirname = os.path.dirname(__file__)
+rootFolder = os.path.join(dirname, '../../data/CBOE/vixfutures/')
 fileName = rootFolder + 'monthCodes.txt'
+#fileName = os.path.join(dirname, '../../data/CBOE/vixfutures/monthCodes.txt')
+
 with open(fileName) as csvDataFile:
     csvReader = csv.reader(csvDataFile, delimiter=',')
     for row in csvReader:
         month_codes[row[2]] = row[1]
         month_names[row[0]] = row[1]
-print "monthCodes OK.."
+print("monthCodes OK..")
 
+#fileName = os.path.join(dirname, '../../data/CBOE/vixfutures/VIXmonthlyExp.txt')
 fileName = rootFolder + 'VIXmonthlyExp.txt'
+print(fileName)
 exp_dict = {} # format: 'month year':'day'
-with open(fileName, 'rb') as csvfile:
+with open(fileName) as csvfile:
         reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
         for row in reader:
             exp_dict[row[2]+'-'+month_names[row[1]]] = row[0]
-print "expirations tab OK.."
+print("expirations tab OK..")
 
 def readFuturesData(expYrs):
     # todo:years should be trading dates not expiries!?
@@ -42,12 +49,12 @@ def readFuturesData(expYrs):
             tabList.append(df)
     tab = pd.concat(tabList)
     tab = tab.rename(index=str, columns = {'Trade Date':'date', 'Futures':'expiry', 'Open':'open', 'High':'high', 'Low':'low', 'Close':'close','Settle':'settle','Total Volume':'volume'})
-    print "getting data OK.." 
+    print("getting data OK..")
     tab['expiry'] = tab['expiry'].apply(formatExp)
-    print "formatting expiries OK.."
+    print("formatting expiries OK..")
     tab['date'] = pd.to_datetime(tab.date)
     tab['date'] = tab['date'].dt.strftime('%Y-%m-%d')
-    tab['daysToMat'] = map(lambda x,y: np.busday_count(x,y), tab.date, tab.expiry)
+    tab['daysToMat'] = list(map(lambda x,y: np.busday_count(x,y), tab.date, tab.expiry))
     tab['date'] = pd.to_datetime(tab.date)    
     tab['expiry'] = pd.to_datetime(tab['expiry'])
     #tab = tab.set_index('date')
