@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jan  4 16:26:26 2019
+
+@author: adamka
+"""
+
+{
+  'symbol':'VXF9',
+  'description':'VIX futures, expiry:20190216',
+  'sec_type':'FUT',
+  'exch':'CFE',
+  'currency':'USD',
+  'freq':'1H',
+  'start_date':'',
+  'end_date':'',
+  'fileds':['date','time','open','close'],
+  'permission': 'CFE Enhanced',
+  'data':[
+             ['20170216', '09:30', 15.7, 16.4],
+             ['20170216', '10:30', 16.4, 15.9]    
+         ]       
+ }
+ vagy:
+ {
+     'data':[
+           {'date':'20170216' , 'time':'09:30', 'open':15.7, 'close':16.4},
+           {'datetime':'20170216': , 'time':'10:30', 'open':16.4, 'close':15.9}
+          ]
+ }

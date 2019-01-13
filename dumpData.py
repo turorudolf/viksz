@@ -10,7 +10,8 @@ spec_vxz = {'symbol':'VXZ',
 			'prim_exch':'SMART',
 			'curr':'USD',
 			'trade_type':'TRADES'}
-spec_vxx = {'symbol':'VXX', 
+spec_vxx = {'symbol':'VXX',
+            'localSymbol':'',
 			'sec_type':'STK',
 			'exch':'SMART',
 			'prim_exch':'SMART',
@@ -46,17 +47,19 @@ spec_vstoxx = {'symbol':'V2TX',
 			'curr':'EUR',
 			'trade_type':'TRADES',
 			'permission': 'German ETFs and Indices'}
-spec_vixfut = {#'symbol':'VIX',
-              'localSymbol':'VXN9',
-			'sec_type':'FUT',
+spec_vixfut = {'symbol':'',
+              'localSymbol':'VX05F9',
+			#'localSymbol':'VXF9',
+              'sec_type':'FUT',
 			'exch':'CFE',
 			'prim_exch':'CFE',
 			'curr':'USD',
               #'lastTradeDateOrContractMonth':'201901',
               'filename':'VIXFUT201907',
 			'trade_type':'TRADES',
+              #'trade_type':'ASK',
 			'permission': 'CFE Enhanced'}
-spec = spec_tvix
+spec = spec_vixfut
 contract = tools.instrument(spec)
 #contract = tools.instrument('VIX', 'IND', 'CBOE', 'CBOE', 'USD', 'TRADES')
 
@@ -64,8 +67,8 @@ contract = tools.instrument(spec)
 #freq = "30 mins"
 #freq = "10 mins"
 #freq = "5 mins"
-freq = "1 min"
-#freq = "1 hour"
+#freq = "1 min"
+freq = "1 hour"
 #freq = "1 day"
 #period = '1 Y'
 period = '1 M'

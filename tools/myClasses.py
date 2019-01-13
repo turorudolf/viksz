@@ -21,9 +21,9 @@ class connHandler():
     def historical_data_handler(self, msg):
         # The response data callback function
         date_time = msg.date.split("  ")
-        #print(msg)
-        print (date_time[0], date_time[1], msg.open,  msg.high, msg.low, msg.close, msg.volume)
-        self.writer.writerow([date_time[0], date_time[1], msg.open,  msg.high, msg.low, msg.close, msg.volume])
+        print(msg)
+        #print (date_time[0], date_time[1], msg.open,  msg.high, msg.low, msg.close, msg.volume)
+        #self.writer.writerow([date_time[0], date_time[1], msg.open,  msg.high, msg.low, msg.close, msg.volume])
     def error_handler(self,msg):
         print(msg)
     def save_order_id(self,msg):
